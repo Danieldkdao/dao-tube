@@ -1,10 +1,20 @@
-import Image from "next/image";
+import { HomeView } from "@/modules/home/ui/views/home-view";
+import { getQueryClient, trpc } from "@/trpc/server";
+import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
-const HomePage = () => {
+const HomePage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ categoryId?: string }>;
+}) => {
+  const { categoryId } = await searchParams;
+  const queryClient = getQueryClient();
+  void queryClient.prefetchQuery(trpc.categories.getMany.queryOptions());
+
   return (
-    <div>
-      I will load videos in the future
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <HomeView categoryId={categoryId} />
+    </HydrationBoundary>
   );
 };
 
