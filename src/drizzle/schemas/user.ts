@@ -1,4 +1,10 @@
-import { pgTable, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  pgTable,
+  timestamp,
+  uniqueIndex,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 export const UserTable = pgTable(
   "users",
@@ -6,6 +12,7 @@ export const UserTable = pgTable(
     id: varchar().primaryKey(),
     name: varchar().notNull(),
     // todo: add banner fields
+    allowedUser: boolean().notNull(),
     imageUrl: varchar().notNull(),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
