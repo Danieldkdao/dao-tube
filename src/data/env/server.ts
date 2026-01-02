@@ -6,6 +6,8 @@ export const envServer = createEnv({
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().min(1),
     CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1),
+    UPSTASH_REDIS_REST_URL: z.string().min(1),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
   },
   emptyStringAsUndefined: true,
   experimental__runtimeEnv: true,

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { TRPCReactProvider } from "@/trpc/client";
 
 const inter = Inter({
   variable: "--font-inter-sans",
@@ -21,11 +22,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="en">
-        <body className={`${inter.variable} ${inter.className} antialiased`}>
-          {children}
-        </body>
-      </html>
+      <TRPCReactProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body className={`${inter.variable} ${inter.className} antialiased`}>
+            {children}
+          </body>
+        </html>
+      </TRPCReactProvider>
     </ClerkProvider>
   );
 }
