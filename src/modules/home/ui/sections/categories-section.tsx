@@ -12,6 +12,7 @@ export const CategoriesSection = ({ categoryId }: { categoryId?: string }) => {
     <Suspense
       fallback={<FilterCarousel isLoading data={[]} onSelect={() => {}} />}
     >
+      {/* todo: add proper error state */}
       <ErrorBoundary fallback={<p>Error...</p>}>
         <CategoriesSectionSuspense categoryId={categoryId} />
       </ErrorBoundary>
