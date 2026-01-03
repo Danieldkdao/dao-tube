@@ -7,6 +7,12 @@ export const VideoTable = pgTable("videos", {
   id: uuid().primaryKey().defaultRandom(),
   title: varchar().notNull(),
   description: varchar(),
+  muxStatus: varchar(),
+  muxAssetId: varchar().unique(),
+  muxUploadId: varchar().unique(),
+  muxPlaybackId: varchar().unique(),
+  muxTrackId: varchar().unique(),
+  muxTrackStatus: varchar(),
   userId: varchar()
     .references(() => UserTable.id, { onDelete: "cascade" })
     .notNull(),

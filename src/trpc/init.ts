@@ -30,10 +30,10 @@ const isAuthed = t.middleware(async ({ next, ctx }) => {
     .where(eq(UserTable.id, ctx.auth.userId))
     .limit(1);
 
-  if (!user || (!user.allowedUser && process.env.NODE_ENV === "production")) {
+  if (!user || (process.env.NODE_ENV === "production" && !user.allowedUser)) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
-      message: "Unavailable in production",
+      message: "Feature disabled in production",
     });
   }
 
