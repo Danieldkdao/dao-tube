@@ -1,7 +1,19 @@
-import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  timestamp,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { UserTable } from "./user";
 import { relations } from "drizzle-orm";
 import { CategoryTable } from "./category";
+
+export const videoVisibility = pgEnum("video_visibility", [
+  "private",
+  "public",
+] as const);
 
 export const VideoTable = pgTable("videos", {
   id: uuid().primaryKey().defaultRandom(),
@@ -13,6 +25,10 @@ export const VideoTable = pgTable("videos", {
   muxPlaybackId: varchar().unique(),
   muxTrackId: varchar().unique(),
   muxTrackStatus: varchar(),
+  thumbnailUrl: varchar(),
+  previewUrl: varchar(),
+  duration: integer().default(0).notNull(),
+  visibility: videoVisibility().default("private").notNull(),
   userId: varchar()
     .references(() => UserTable.id, { onDelete: "cascade" })
     .notNull(),
