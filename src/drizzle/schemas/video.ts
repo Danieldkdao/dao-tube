@@ -9,6 +9,7 @@ import {
 import { UserTable } from "./user";
 import { relations } from "drizzle-orm";
 import { CategoryTable } from "./category";
+import { createUpdateSchema } from "drizzle-zod";
 
 export const videoVisibility = pgEnum("video_visibility", [
   "private",
@@ -41,6 +42,8 @@ export const VideoTable = pgTable("videos", {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const videoUpdateSchema = createUpdateSchema(VideoTable);
 
 export const videoRelations = relations(VideoTable, ({ one, many }) => ({
   user: one(UserTable, {
